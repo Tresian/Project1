@@ -7,12 +7,14 @@ from enemy import Enemy
 
 """Сделать правильное отслеживание клавиш, доработать стрельбу по клику мыши, сделать правильное движение врагов, Произвести оптимизацию код"""
 
+"""Сделать правильное меню, для загрузки меню используется разные объекты экранов, 
+изменения разрешения в одном меню, не сохранятся в другом"""
+
 pygame.init()
 
-"""print(f'button1: {mouse_buttons[0]}, button2: {mouse_buttons[1]}, button3: {mouse_buttons[2]},
-button4: {mouse_buttons[3]}, button5: {mouse_buttons[4]}')"""
+rooms = []
 
-def menu():
+def main_menu():
 	"""сделать текст на кнопках"""
 	screen = Display()
 	buttons = [Button(screen, 'Exit', 700, 500), Button(screen, 'Play', 700, 300), Button(screen, 'Settings', 700 , 400)]
@@ -20,7 +22,10 @@ def menu():
 	while True:
 		for event in pygame.event.get():
 			if buttons[0].click() == 'exit': exit()
-			if buttons[1].click() == 'play': game_cycle()
+			if buttons[1].click() == 'play': 
+				print(screen)
+				screen.size = [1080, 720] 
+				game_cycle()
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				exit()
@@ -30,9 +35,22 @@ def menu():
 		pygame.display.update() # for update obj on screen
 		screen.update()
 
+def menu():
+	screen = Display()
+
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				pygame.quit()
+				exit()
+
+		pygame.display.update()
+		screen.update()
 
 def game_cycle():
 	screen = Display()
+	print(screen)
+	print(screen.info())
 	hero = Hero(screen) # переработать
 	enemys = []
 
@@ -59,4 +77,4 @@ def game_cycle():
 
 
 if __name__ == '__main__':
-	menu()
+	main_menu()
