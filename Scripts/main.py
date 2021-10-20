@@ -12,18 +12,17 @@ from enemy import Enemy
 
 pygame.init()
 
-rooms = []
+screen = Display()
 
 def main_menu():
 	"""сделать текст на кнопках"""
-	screen = Display()
+	
 	buttons = [Button(screen, 'Exit', 700, 500), Button(screen, 'Play', 700, 300), Button(screen, 'Settings', 700 , 400)]
 
 	while True:
 		for event in pygame.event.get():
 			if buttons[0].click() == 'exit': exit()
 			if buttons[1].click() == 'play': 
-				print(screen)
 				screen.size = [1080, 720] 
 				game_cycle()
 			if event.type == pygame.QUIT:
@@ -36,8 +35,6 @@ def main_menu():
 		screen.update()
 
 def menu():
-	screen = Display()
-
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -48,8 +45,6 @@ def menu():
 		screen.update()
 
 def game_cycle():
-	screen = Display()
-	print(screen)
 	print(screen.info())
 	hero = Hero(screen) # переработать
 	enemys = []
