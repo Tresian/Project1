@@ -14,17 +14,13 @@ class Hero():
 		self.image = pygame.Surface(self.size).convert() #pygame.image.load("|")
 		self.image.fill(THECOLORS["white"])
 		self.rect = pygame.Rect(self.position, self.size)
-		self.skill = Teleport()
-		self.gun = Gun(self.screen, self.position)
+		
 
 	def control(self, x, y):
 		keys = pygame.key.get_pressed()
 		mouse_buttons = pygame.mouse.get_pressed(5)
 		self.draw()
 		self.move(x, y)
-		if self.gun:
-			self.gun.control(self.rect.centerx, self.rect.centery)
-			if mouse_buttons[0]: self.gun.fire(True)
 
 
 	def draw(self): self.screen.screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -48,5 +44,5 @@ class Hero():
 
 class Magic(Hero):
 	def __init__(self, screen):
-		super().__init__(screen, air)
+		super().__init__(screen)
 		self.image.fill(THECOLORS['red'])
