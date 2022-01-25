@@ -30,7 +30,9 @@ class Button():
             if click[0] == True:
                 self.image.fill(THECOLORS['blue'])
                 if self.text == 'play': return self.text
-                if self.text == 'exit': return self.text
+                if self.text == 'exit': 
+                    pygame.quit()
+                    exit()
                 if self.text == 'Settings': return self.text
             else: self.image.fill(THECOLORS['red'])
         else: self.image.fill(THECOLORS['red'])

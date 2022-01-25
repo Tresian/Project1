@@ -4,6 +4,8 @@ from skills import *
 from guns import *
 # метод image.load создает повернхность
 """сделать стрельбу, камеру которая будет следовать за игроком"""
+
+
 class Hero():
 	"""Модель героя"""
 	def __init__(self, screen):

@@ -20,7 +20,6 @@ screen = Display()
 def game_cycle():
 	menu = Menu(screen)
 	mouse_x, mouse_y = None, None
-	pressed = False
 
 	while True:
 		for event in pygame.event.get():
@@ -29,15 +28,15 @@ def game_cycle():
 				# исправить ошибку атрибута, возможно исправлена
 				try: mouse_x, mouse_y = event.pos[0], event.pos[1]
 				except AttributeError: pass
-			"""if menu.control() == 1:
-				hero = Hero(screen)
-				hero.control(mouse_x, mouse_y)"""
+
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				exit()
 
 		#hero.control(mouse_x, mouse_y)
+
 		menu.control()
+	
 		pygame.display.update() # for update obj on screen
 		screen.update()
 
