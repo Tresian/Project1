@@ -1,6 +1,5 @@
 import pygame
 from pygame import draw
-from pygame.color import THECOLORS
 from display import Display
 from menu import Menu
 
@@ -8,6 +7,9 @@ from menu import Menu
 
 """Сделать правильное меню, для загрузки меню используется разные объекты экранов, 
 изменения разрешения в одном меню, не сохранятся в другом"""
+
+"""Меню открывается в файле мейн, по этому работает 2 файла. Выяснить несет ли это сильную нагрузку или же нет. 
+Попытаться от этого избавиться"""
 
 pygame.init()
 
@@ -23,19 +25,8 @@ def menu():
 				pygame.quit()
 				exit()
 
+		print("main")
 		menu.control()
-		pygame.display.update() # for update obj on screen
-		screen.update()
-
-
-def cycle():
-
-	while True:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				exit()
-
 		pygame.display.update() # for update obj on screen
 		screen.update()
 

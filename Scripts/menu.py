@@ -14,4 +14,5 @@ class Menu():
 
         for _ in self.buttons:
             _.control()
+        print("Menu")
                 

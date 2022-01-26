@@ -31,7 +31,7 @@ class Button():
         if x_ and y_:
             if click[0] == True:
                 self.image.fill(THECOLORS['blue'])
-                if self.text == 'play': return room_1.game()
+                if self.text == 'play': return room_1.cycle()
                 if self.text == 'exit': 
                     pygame.quit()
                     exit()

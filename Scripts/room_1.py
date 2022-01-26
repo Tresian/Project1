@@ -5,7 +5,7 @@ from heroes import Hero
 screen = Display()
 
 
-def game():
+def cycle():
     hero = Hero(screen)
     mouse_x, mouse_y = None, None
 
@@ -19,8 +19,7 @@ def game():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-
-        print(0)
+        print("room_1")
         hero.control(mouse_x, mouse_y)
         pygame.display.update() # for update obj on screen
         screen.update()
