@@ -7,10 +7,11 @@ class Menu():
         self.screen = screen
         self.surf = pygame.Surface(self.screen.size)
         self.surf.fill(THECOLORS["white"])
-        self.buttons = [Button(screen, "Play", 100, 100), Button(screen, "Setings", 100, 150), Button(screen, "Exit", 100, 200)]
+        self.buttons = [Button(screen, "Play", 100, 100), Button(screen, "Setings", 100, 200), Button(screen, "Exit", 100, 300)]
 
     def control(self):
         self.screen.screen.blit(self.surf, (0, 0))
+
         for _ in self.buttons:
             _.control()
                 
