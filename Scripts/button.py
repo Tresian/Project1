@@ -1,5 +1,6 @@
 import pygame
 from pygame.color import THECOLORS
+import room_1
 
 class Button():
     def __init__(self, screen, text, x, y):
@@ -26,11 +27,14 @@ class Button():
 
         x_ = self.position[0] <= mouse_position[0] <= self.position[0] + self.size[0]
         y_ = self.position[1] <= mouse_position[1] <= self.position[1] + self.size[1]
+        
         if x_ and y_:
             if click[0] == True:
                 self.image.fill(THECOLORS['blue'])
-                if self.text == 'play': return self.text
-                if self.text == 'exit': return self.text
+                if self.text == 'play': return room_1.cycle()
+                if self.text == 'exit': 
+                    pygame.quit()
+                    exit()
                 if self.text == 'Settings': return self.text
             else: self.image.fill(THECOLORS['red'])
         else: self.image.fill(THECOLORS['red'])

@@ -18,6 +18,3 @@ class Display():
     def update(self):
         self.screen.fill(THECOLORS['black'])
         self.clock.tick(self.FPS)
-    
-    def info(self):
-        return f"Size {self.size}"
