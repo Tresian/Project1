@@ -1,4 +1,4 @@
-import pygame, control, time
+import pygame, time
 from pygame import draw
 from pygame.color import THECOLORS
 from display import Display
