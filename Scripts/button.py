@@ -1,6 +1,6 @@
 import pygame
 from pygame.color import THECOLORS
-import room_1
+from lvl_1 import Lvl_1
 
 class Button():
     def __init__(self, screen, text, x, y):
@@ -11,9 +11,12 @@ class Button():
         self.image = pygame.Surface(self.size).convert()
         self.image.fill(THECOLORS['red'])
 
+        self.lvl = Lvl_1()
+
     def control(self):
         self.draw()
         self.click()
+        
 
     def draw(self):
         font_ = pygame.font.SysFont('name', 30)
@@ -22,6 +25,7 @@ class Button():
         self.screen.blit(text, (self.position[0] + 50, self.position[1] + 10))
 
     def click(self):
+        """При зажатии кнопки мыши косаясь кнопки, она срабатывает, переделать"""
         mouse_position = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
@@ -31,10 +35,8 @@ class Button():
         if x_ and y_:
             if click[0] == True:
                 self.image.fill(THECOLORS['blue'])
-                if self.text == 'play': return room_1.cycle()
-                if self.text == 'exit': 
-                    pygame.quit()
-                    exit()
-                if self.text == 'Settings': return self.text
+                if self.text == 'play': return self.lvl.cycle()
+                if self.text == 'exit': exit()
+                if self.text == 'Settings': return
             else: self.image.fill(THECOLORS['red'])
         else: self.image.fill(THECOLORS['red'])
