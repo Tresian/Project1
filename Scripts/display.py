@@ -25,3 +25,4 @@ class Display():
     def update(self, bg_color = 'black'):
         self.screen.fill(THECOLORS[bg_color])
         self.clock.tick(self.FPS)
+
