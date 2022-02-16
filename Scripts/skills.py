@@ -26,3 +26,6 @@ class Teleport(Skill):
         x, y = mouse_position[0], mouse_position[1]
         self.cooldown(True)
         return x, y
+
+    def use(self):
+        return self.tp()

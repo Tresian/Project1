@@ -17,12 +17,16 @@ class Hero():
 		if color == None: self.image.fill(THECOLORS["white"])
 		else: self.image.fill(THECOLORS[color])
 		self.rect = pygame.Rect(self.position, self.size)
+
+		self.tp = Teleport()
 		
 	def control(self, x, y):
 		keys = pygame.key.get_pressed()
 		mouse_buttons = pygame.mouse.get_pressed(5)
 		self.draw()
 		self.move(x, y)
+
+		if keys[pygame.K_f]: self.tp.use()
 
 	def draw(self): self.screen.screen.blit(self.image, (self.rect.x, self.rect.y))
 

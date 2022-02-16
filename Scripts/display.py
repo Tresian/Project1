@@ -22,7 +22,7 @@ class Display():
         self.FPS = 60
         self.clock = pygame.time.Clock()
 
-    def update(self, bg_color = 'black'):
-        self.screen.fill(THECOLORS[bg_color])
+    def update(self):
+        self.screen.fill(THECOLORS['black'])
         self.clock.tick(self.FPS)
 

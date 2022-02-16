@@ -22,7 +22,7 @@ class Lvl_1():
                     except AttributeError: pass
 
                 if event.type == pygame.KEYDOWN:
-                    if keys[pygame.K_ESCAPE]: return 'menu'
+                    if keys[pygame.K_ESCAPE]: return 
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
