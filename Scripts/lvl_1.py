@@ -5,8 +5,8 @@ from heroes import Hero
 
 
 class Lvl_1():
-    def __init__(self):
-        self.screen = Display()
+    def __init__(self, screen):
+        self.screen = screen
         self.hero = Hero(self.screen)
 
         self.mouse_click = [None, None]
@@ -21,8 +21,7 @@ class Lvl_1():
                     try: self.mouse_click = [event.pos[0], event.pos[1]]
                     except AttributeError: pass
 
-                if event.type == pygame.KEYDOWN:
-                    if keys[pygame.K_ESCAPE]: return 
+                if event.type == pygame.KEYDOWN and keys[pygame.K_ESCAPE]: return  
 
                 if event.type == pygame.QUIT:
                     pygame.quit()

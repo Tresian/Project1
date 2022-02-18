@@ -6,28 +6,28 @@ from heroes import Hero
 from lvl_1 import Lvl_1
 
 """Переписать main.py и сделать в этом файле меню, настройки и выход, сделать правильную систему выхода из игры"""
+"""Сделать контроллер который будет отвечать за переходы между комнатами"""
 class Menu():
     def __init__(self):
         pygame.init()
 
-        self.screen = Display()
+        self.screen = Display(False,'Menu')
         self.hero = Hero(self.screen, color = 'black')
 
-        self.lvl = Lvl_1()
+        self.lvl = Lvl_1(self.screen)
 
         self.surf = pygame.Surface(self.screen.size)
         self.surf.fill(THECOLORS["white"])
 
         self.buttons = [
-            Button("Play", 50, 100), 
-            Button("Settings", 50, 200), 
-            Button("Saved", 50, 300),
-            Button("Exit", 50, 400)
+            Button(self.screen,"Play", 50, 100), 
+            Button(self.screen,"Settings", 50, 200), 
+            Button(self.screen,"Saved", 50, 300),
+            Button(self.screen,"Exit", 50, 400)
             ]
 
         self.mouse_click = [None, None]
-
-
+ 
     def run(self):
         self.surf.fill(THECOLORS['white'])
         while True:

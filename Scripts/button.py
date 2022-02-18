@@ -2,10 +2,10 @@ import pygame
 from pygame.color import THECOLORS
 from display import Display
 #- self.size[0] / 2
-
+"""Сделать загружку кантинок, исправить местоположение"""
 class Button():
-    def __init__(self, text, x, y):
-        self.screen = Display()
+    def __init__(self,screen, text, x, y):
+        self.screen = screen
         self.text = text.lower()
         self.size = (150, 40) #(Длина, высота)
         self.position = [x, y]

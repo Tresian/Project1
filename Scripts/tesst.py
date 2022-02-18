@@ -1,7 +1,7 @@
 import pygame, time
 from pygame import draw
 from pygame.color import THECOLORS
-from display import Display
+#from display import Display
 from button import Button
 from enemy import Enemy
 from menu import Menu
@@ -13,17 +13,17 @@ from menu import Menu
 
 pygame.init()
 
-screen = Display()
+#screen = Display()
 
 def main():
-    menu = Menu(screen)
 
     while True:
         for event in pygame.event.get():
+            keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
                 pygame.quit()
+            if event.type == pygame.KEYDOWN and keys[pygame.K_ESCAPE]: return
 
-        menu.draw()
 
 
 if __name__ == '__main__':

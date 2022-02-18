@@ -5,7 +5,7 @@ from bullet import Bullet
 """сделать полет пули не по нажатию кнопки"""
 
 class Gun():
-    def __init__(self, screen, hero_position):
+    def __init__(self, screen, hero_position: list = None):
         self.screen = screen
         self.position = (hero_position[0], hero_position[1])
         self.size = (5, 5)
@@ -21,11 +21,11 @@ class Gun():
         self.move(x, y)
         self.check_bullets()
 
-    def draw(self):
-        self.screen.screen.blit(self.image, (self.rect.x, self.rect.y))
+    def draw(self): self.screen.screen.blit(self.image, (self.rect.x, self.rect.y))
 
-    def move(self, x, y):
-        self.rect.centerx, self.rect.centery = x, y
+    def move(self, x, y): 
+        if x and y is None: pass
+        else: self.rect.centerx, self.rect.centery = x, y
 
     def fire(self, key = None):
         mouse_position = pygame.mouse.get_pos()
