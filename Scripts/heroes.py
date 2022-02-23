@@ -8,15 +8,16 @@ from guns import *
 
 class Hero():
 	"""Модель героя"""
-	def __init__(self, screen, color: str = 'white'):
-		self.screen = screen
-		self.position = [screen.size[0] / 2, screen.size[1] / 2]
+	def __init__(self, color: str = "white"):
+		self.screen = pygame.display.get_surface()
+		self.screen_size = [self.screen.get_width(), self.screen.get_height()]
+		self.position = [self.screen_size[0] / 2, self.screen_size[1] / 2]
 
 		self.size = (50, 50)
 		self.speed = 2.0
 
 		self.image = pygame.Surface(self.size).convert() #pygame.image.load("|")
-		if color == None: self.image.fill(THECOLORS["white"])
+		if color == "white": self.image.fill(THECOLORS[color])
 		else: self.image.fill(THECOLORS[color])
 		self.rect = pygame.Rect(self.position, self.size)
 		
@@ -32,7 +33,7 @@ class Hero():
 
 		#if keys[pygame.K_f]: self.tp.use()
 
-	def draw(self): self.screen.screen.blit(self.image, (self.rect.x, self.rect.y))
+	def draw(self): self.screen.blit(self.image, (self.rect.x, self.rect.y))
 
 	def move(self, x, y):
 		"""Cлишком быстрое замедление, переписать управление, иногда застревает и не перестает двигаться"""

@@ -4,20 +4,22 @@ from display import Display
 #- self.size[0] / 2
 """Сделать загружку кантинок, исправить местоположение"""
 class Button():
-    def __init__(self,screen, text, x, y):
-        self.screen = screen
+    def __init__(self, text, x, y):
+        self.screen = pygame.display.get_surface()
         self.text = text.lower()
         self.size = (150, 40) #(Длина, высота)
         self.position = [x, y]
         self.image = pygame.Surface(self.size).convert()
         self.image.fill(THECOLORS['red'])
+
+        self.buttons = ["play", "settings", "exit", "back", "fullscreen"]
         
 
     def draw(self):
         font_ = pygame.font.SysFont('name', 30)
         text = font_.render(self.text, True, THECOLORS['black'])
-        self.screen.screen.blit(self.image, (self.position))
-        self.screen.screen.blit(text, (self.position[0] + 50, self.position[1] + 10))
+        self.screen.blit(self.image, (self.position))
+        self.screen.blit(text, (self.position[0] + 50, self.position[1] + 10))
 
     def click(self):
         """При зажатии кнопки мыши косаясь кнопки, она срабатывает, переделать"""
@@ -36,8 +38,7 @@ class Button():
         elif x_ and y_ and prefire == False: 
             if click[0] == True:
                 self.image.fill(THECOLORS['blue'])
-                if self.text == 'play': return self.text
-                if self.text == 'exit': return self.text
-                if self.text == 'settings': return self.text
+                if self.text in self.buttons: return self.text
+                else: pass
             else: self.image.fill(THECOLORS['green'])
         else: self.image.fill(THECOLORS['red'])

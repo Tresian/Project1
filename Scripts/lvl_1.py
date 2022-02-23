@@ -7,7 +7,7 @@ from heroes import Hero
 class Lvl_1():
     def __init__(self, screen):
         self.screen = screen
-        self.hero = Hero(self.screen)
+        self.hero = Hero()
 
         self.mouse_click = [None, None]
 

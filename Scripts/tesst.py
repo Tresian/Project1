@@ -12,8 +12,10 @@ from menu import Menu
 изменения разрешения в одном меню, не сохранятся в другом"""
 
 pygame.init()
-
-#screen = Display()
+pygame.display.init()
+info = pygame.display.list_modes()[0]
+size = (1400, 800)
+screen = pygame.display.set_mode(size)
 
 def main():
 
@@ -22,7 +24,16 @@ def main():
             keys = pygame.key.get_pressed()
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.KEYDOWN and keys[pygame.K_ESCAPE]: return
+                exit()
+            if event.type == pygame.KEYDOWN and keys[pygame.K_f]:
+                #size = pygame.display.list_modes()[0]
+                #print(info)
+                #print(pygame.display.toggle_fullscreen())
+                screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
+                screen.fill(THECOLORS["white"])
+            if event.type == pygame.KEYDOWN and keys[pygame.K_v]:
+                print(pygame.display.toggle_fullscreen())
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: exit()
 
 
 

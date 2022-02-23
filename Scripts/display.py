@@ -11,13 +11,13 @@ class Display():
         
 
         if _FULLSCREEN == True:
-            self.size = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+            self.size = pygame.display.list_modes()[0]
             self.screen = pygame.display.set_mode(self.size)
         else: 
             self.size = [1400, 800]
             self.screen = pygame.display.set_mode(self.size)
 
-        print(self.size, name_used, hash(id(name_used)))
+        #print(self.size, name_used, hash(id(name_used)))
         
         self.title = pygame.display.set_caption("Project1")
         self.icon = pygame.image.load('Picture/6.jpg')
@@ -26,7 +26,13 @@ class Display():
         self.FPS = 60
         self.clock = pygame.time.Clock()
 
-    def update(self):
-        self.screen.fill(THECOLORS['black'])
-        self.clock.tick(self.FPS)
+    def update(self, color: str = "black", surf = None):
+        if surf: pass
+        else:
+            self.screen.fill(THECOLORS[color])
+            self.clock.tick(self.FPS)
+
+    def new(self, _FULLSCREEN: bool = False):
+        if _FULLSCREEN: self.screen = pygame.display.set_mode(self.size, pygame.FULLSCREEN)
+        else: pass
 

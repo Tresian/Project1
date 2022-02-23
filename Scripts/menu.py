@@ -5,31 +5,26 @@ from display import Display
 from heroes import Hero
 from lvl_1 import Lvl_1
 
-"""Переписать main.py и сделать в этом файле меню, настройки и выход, сделать правильную систему выхода из игры"""
 """Сделать контроллер который будет отвечать за переходы между комнатами"""
 class Menu():
     def __init__(self):
         pygame.init()
 
         self.screen = Display(False,'Menu')
-        self.hero = Hero(self.screen, color = 'black')
+        self.hero = Hero(color = 'black')
 
         self.lvl = Lvl_1(self.screen)
 
-        self.surf = pygame.Surface(self.screen.size)
-        self.surf.fill(THECOLORS["white"])
-
         self.buttons = [
-            Button(self.screen,"Play", 50, 100), 
-            Button(self.screen,"Settings", 50, 200), 
-            Button(self.screen,"Saved", 50, 300),
-            Button(self.screen,"Exit", 50, 400)
+            Button("Play", 50, 100), 
+            Button("Settings", 50, 200), 
+            Button("Saved", 50, 300),
+            Button("Exit", 50, 400)
             ]
 
         self.mouse_click = [None, None]
  
-    def run(self):
-        self.surf.fill(THECOLORS['white'])
+    def run(self, color: str = "white"):
         while True:
             for event in pygame.event.get():
                 mouse_buttons = pygame.mouse.get_pressed(5)
@@ -40,23 +35,28 @@ class Menu():
 
                 if event.type == pygame.QUIT: return exit()
 
-            self.screen.screen.blit(self.surf, (0, 0))
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: pass
+
 
             for _ in self.buttons: 
                 _.draw()
                 if _.click() == 'play': self.lvl.cycle()
-                if _.click() == 'settings': return self.settings()
+                if _.click() == 'settings': self.settings()
                 if _.click() == 'exit': return exit()
 
 
             self.hero.control(self.mouse_click[0], self.mouse_click[1])
 
             pygame.display.update() # for update obj on screen
-            self.screen.update()
+            self.screen.update(color)
 
 
     def settings(self):
-        self.surf.fill(THECOLORS['purple'])
+        buttons = [
+            Button("Fullscreen", 50, 100),
+            Button("Back", 50, 300)
+        ]
+
         while True:
             for event in pygame.event.get():
                 keys = pygame.key.get_pressed()
@@ -71,14 +71,24 @@ class Menu():
 
                 if event.type == pygame.QUIT: return exit()
 
-            
-            self.screen.screen.blit(self.surf, (0, 0))
+
+            for _ in buttons:
+                _.draw()
+                if _.click() == "fullscreen": self.screen.new(True)
+                if _.click() == "back": return
 
             self.hero.control(self.mouse_click[0], self.mouse_click[1])
 
             pygame.display.update() # for update obj on screen
-            self.screen.update()
+            self.screen.update("purple")
 
+
+class Settings(Menu):
+    def __init__(self):
+        pass
+
+    def run(self):
+        pass
 
 
 """сделать наследование от главного класса меню."""
