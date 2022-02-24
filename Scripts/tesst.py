@@ -13,9 +13,15 @@ from menu import Menu
 
 pygame.init()
 pygame.display.init()
-info = pygame.display.list_modes()[0]
+info = pygame.display.list_modes()
+a = len(info)
+print(a)
+print(info[a-1])
+print(info[2])
 size = (1400, 800)
 screen = pygame.display.set_mode(size)
+
+skin = pygame.image.load('Picture/6.jpg')
 
 def main():
 

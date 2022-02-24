@@ -1,6 +1,6 @@
 import pygame
 from pygame.color import THECOLORS
-"реализовать главный экран"
+
 
 class Display():
     "Создание главного экрана"
@@ -9,7 +9,6 @@ class Display():
         """pygame.RESIZABLE позволяет изменять размеры окна
         pygame.FULLSCREEN позволяет развернуть окно на весь экран"""
         
-
         if _FULLSCREEN == True:
             self.size = pygame.display.list_modes()[0]
             self.screen = pygame.display.set_mode(self.size)
@@ -33,6 +32,10 @@ class Display():
             self.clock.tick(self.FPS)
 
     def new(self, _FULLSCREEN: bool = False):
-        if _FULLSCREEN: self.screen = pygame.display.set_mode(self.size, pygame.FULLSCREEN)
-        else: pass
+        if _FULLSCREEN: 
+            self.screen = pygame.display.set_mode(self.size, pygame.FULLSCREEN)
+            return True
+        elif _FULLSCREEN == False: 
+            self.screen = pygame.display.set_mode(self.size)
+            return False
 
