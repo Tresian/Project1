@@ -9,6 +9,7 @@ class Display():
         """pygame.RESIZABLE позволяет изменять размеры окна
         pygame.FULLSCREEN позволяет развернуть окно на весь экран"""
         
+        
         if _FULLSCREEN == True:
             self.size = pygame.display.list_modes()[0]
             self.screen = pygame.display.set_mode(self.size)
@@ -25,14 +26,15 @@ class Display():
         self.FPS = 60
         self.clock = pygame.time.Clock()
 
+
     def update(self, color: str = "black", surf = None):
         if surf: pass
         else:
             self.screen.fill(THECOLORS[color])
             self.clock.tick(self.FPS)
 
-    def new(self, _FULLSCREEN: bool = False):
-        if _FULLSCREEN: 
+    def new(self, _FULLSCREEN: bool = False) -> bool:
+        if _FULLSCREEN:
             self.screen = pygame.display.set_mode(self.size, pygame.FULLSCREEN)
             return True
         elif _FULLSCREEN == False: 

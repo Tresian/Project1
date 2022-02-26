@@ -9,13 +9,15 @@ from lvl_1 import Lvl_1
 
 """Сделать cooldown для кнопок"""
 class Menu():
-    def __init__(self):
+    def __init__(self) -> None:
         pygame.init()
+        self.click = True
 
-        self.screen = Display(False,'Menu')
+        self.screen = Display(False)
         self.hero = Hero(color = 'black')
 
         self.lvl = Lvl_1(self.screen)
+        self.settings = Settings(self.screen)
 
         self.buttons = [
             Button("Play", 50, 100), 
@@ -23,9 +25,9 @@ class Menu():
             Button("Saved", 50, 300),
             Button("Exit", 50, 400)
             ]
-
+        
  
-    def run(self, color: str = "white"):
+    def run(self, color: str = "white", buttons: list = None) -> None:
         while True:
             for event in pygame.event.get():
                 mouse_buttons = pygame.mouse.get_pressed(5)
@@ -34,12 +36,22 @@ class Menu():
 
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: pass
 
-
-            for _ in self.buttons: 
-                _.draw()
-                if _.click() == 'play': self.lvl.cycle()
-                if _.click() == 'settings': self.settings()
-                if _.click() == 'exit': return sys.exit()
+            if buttons == None:
+                for _ in self.buttons: 
+                    _.draw()
+                    if _.click() == 'play': self.lvl.cycle()
+                    if _.click() == 'settings': self.settings.run('purple', self.settings.buttons)
+                    if _.click() == 'exit': return sys.exit()
+            else:
+                for _ in buttons:
+                    _.draw()
+                    if _.click() == 'fullscreen' and self.click == False: 
+                        self.click = self.screen.new(True)
+                        pygame.time.delay(700)
+                    elif _.click() == 'fullscreen' and self.click:
+                        self.click = self.screen.new(False)
+                        pygame.time.delay(700)
+                    if _.click() == 'back': return
 
 
             self.hero.control()
@@ -82,11 +94,17 @@ class Menu():
 
 
 class Settings(Menu):
-    def __init__(self):
-        pass
+    def __init__(self, screen):
+        self.screen = screen
+        self.click = False
+        self.buttons = [
+            Button("Fullscreen", 50, 100),
+            Button("Back", 50, 300)
+        ]
 
-    def run(self):
-        pass
+        self.color = 'purple'
+
+        self.hero = Hero(color = 'black')
 
 
 """сделать наследование от главного класса меню."""

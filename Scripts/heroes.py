@@ -1,10 +1,12 @@
 from ast import Tuple
+from gettext import translation
 import pygame
 from pygame.color import THECOLORS
 from skills import *
 from guns import *
 # метод image.load создает повернхность
 """сделать стрельбу, камеру которая будет следовать за игроком"""
+"""сделать сортировку аргументов, настроить здоровье"""
 
 
 class Hero():
@@ -31,15 +33,77 @@ class Hero():
 		self.rect = pygame.Rect(self.position, self.size)
 
 		self.mouse_pos = (0, 0)
+		if color == 'white': 
+			self.have_gun = True
+			self.gun = Gun(self.position)
+		else: 
+			self.have_gun = False
+			self.gun = None
 		
+		self.current_health = 200
+		self.target_health = 500
+		self.max_health = 1000
+		self.health_bar_lenght = 400
+		self.health_ratio = self.max_health / self.health_bar_lenght
+		self.health_cheange_speed = 5
+
+		self.a = False
+
+
+	def get_damage(self, amount):
+		if self.current_health > 0: self.current_health -= amount
+		if self.current_health <= 0: self.current_health = 0
+	def get_health(self, amount):
+		if self.current_health < self.max_health: self.current_health += amount
+		if self.current_health >= self.max_health: self.current_health = self.max_health
+
+	def basic_health(self):
+		pygame.draw.rect(self.screen, THECOLORS['red'], (10, 10, self.target_health/self.health_ratio, 25))
+		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 10, self.health_bar_lenght, 25), 4)
+
+	def advanced_health(self, a = False):
+		transition_width = 0
+		transition_color = THECOLORS['red']
+
+		if a:
+			if self.current_health < self.target_health: 
+				self.current_health += self.health_cheange_speed
+				transition_width = int((self.target_health - self.current_health)/self.health_ratio)
+				transition_color = THECOLORS['green']
+			if self.current_health > self.target_health: 
+				self.current_health -= self.health_cheange_speed
+				transition_width = int((self.target_health - self.current_health)/self.health_ratio)
+				transition_color = THECOLORS['yellow']
+
+		health_bar_rect = pygame.Rect(10,25,self.current_health / self.health_ratio, 15)
+		transition_bar_rect = pygame.Rect(health_bar_rect.right, 25, transition_width, 15)
+
+		pygame.draw.rect(self.screen, THECOLORS['green'], health_bar_rect)
+		pygame.draw.rect(self.screen, THECOLORS['red'], transition_bar_rect)
+		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 25, self.health_bar_lenght, 15), 4)
+
 
 	def control(self):
+		self.advanced_health(self.a)
 		keys = pygame.key.get_pressed()
 		mouse_buttons = pygame.mouse.get_pressed(5) #tuple ()
 	
 		if mouse_buttons[2]: self.mouse_pos = pygame.mouse.get_pos()
 		self.draw()
 		self.move()
+
+		if self.have_gun:
+			self.gun.control([self.rect.centerx, self.rect.centery])
+
+		if keys[pygame.K_r]: 
+			self.get_damage(200)
+			self.a = True
+		else: self.a = False
+		if keys[pygame.K_e]: 
+			self.get_health(200)
+			self.a = True
+		else: self.a = False
+
 
 
 		#if keys[pygame.K_f]: self.tp.use()
@@ -66,6 +130,7 @@ class Hero():
 
 
 class Magic(Hero):
-	def __init__(self, screen):
-		super().__init__(screen)
+	def __init__(self):
+		super().__init__()
 		self.image.fill(THECOLORS['red'])
+
