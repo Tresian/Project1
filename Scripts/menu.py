@@ -9,11 +9,12 @@ from lvl_1 import Lvl_1
 
 """Сделать cooldown для кнопок"""
 class Menu():
-    def __init__(self) -> None:
-        pygame.init()
+    """Главное меню"""
+    def __init__(self):
         self.click = True
 
         self.screen = Display(False)
+        self.color = 'white'
         self.hero = Hero(color = 'black')
 
         self.lvl = Lvl_1(self.screen)
@@ -27,20 +28,20 @@ class Menu():
             ]
         
  
-    def run(self, color: str = "white", buttons: list = None) -> None:
+    def run(self, buttons: list = None) -> None:
         while True:
             for event in pygame.event.get():
                 mouse_buttons = pygame.mouse.get_pressed(5)
 
                 if event.type == pygame.QUIT: return sys.exit()
 
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: pass
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and buttons != []: return
 
             if buttons == None:
                 for _ in self.buttons: 
                     _.draw()
                     if _.click() == 'play': self.lvl.cycle()
-                    if _.click() == 'settings': self.settings.run('purple', self.settings.buttons)
+                    if _.click() == 'settings': self.settings.run(self.settings.buttons)
                     if _.click() == 'exit': return sys.exit()
             else:
                 for _ in buttons:
@@ -56,8 +57,7 @@ class Menu():
 
             self.hero.control()
 
-            pygame.display.update() # for update obj on screen
-            self.screen.update(color)
+            self.screen.update(self.color)
 
 
     def settings(self):

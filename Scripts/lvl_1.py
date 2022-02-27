@@ -24,5 +24,5 @@ class Lvl_1():
 
 
             self.hero.control()
-            pygame.display.update() # for update obj on screen
+
             self.screen.update()

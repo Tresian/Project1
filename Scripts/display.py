@@ -26,10 +26,10 @@ class Display():
         self.FPS = 60
         self.clock = pygame.time.Clock()
 
-
     def update(self, color: str = "black", surf = None):
         if surf: pass
         else:
+            pygame.display.update() # for update obj on screen
             self.screen.fill(THECOLORS[color])
             self.clock.tick(self.FPS)
 
