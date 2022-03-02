@@ -40,51 +40,51 @@ class Hero():
 			self.have_gun = False
 			self.gun = None
 		
-		self.current_health = 200
-		self.target_health = 500
+		self.current_health = 1000
+		self.target_health = 1000
 		self.max_health = 1000
-		self.health_bar_lenght = 400
-		self.health_ratio = self.max_health / self.health_bar_lenght
-		self.health_cheange_speed = 5
-
-		self.a = False
+		self.health_bar_lenght = 200
+		self.health_ratio = self.max_health // self.health_bar_lenght
+		self.health_cheange_speed = 2
 
 
 	def get_damage(self, amount):
-		if self.current_health > 0: self.current_health -= amount
-		if self.current_health <= 0: self.current_health = 0
+		if self.current_health > 0 and self.target_health - amount >= 0: self.target_health -= amount
+		else: self.target_health = 0
+		if self.current_health <= 0: self.target_health = 0
 	def get_health(self, amount):
-		if self.current_health < self.max_health: self.current_health += amount
-		if self.current_health >= self.max_health: self.current_health = self.max_health
+		if self.current_health < self.max_health and self.target_health+amount <= self.max_health: self.target_health += amount
+		else: self.target_health = self.max_health
+		if self.current_health >= self.max_health: self.target_health = self.max_health
 
 	def basic_health(self):
-		pygame.draw.rect(self.screen, THECOLORS['red'], (10, 10, self.target_health/self.health_ratio, 25))
-		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 10, self.health_bar_lenght, 25), 4)
+		pygame.draw.rect(self.screen, THECOLORS['red'], (10, 10, self.target_health/self.health_ratio, 15))
+		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 10, self.health_bar_lenght, 15), 1)
 
-	def advanced_health(self, a = False):
+	def advanced_health(self):
+		"""Изменить скорость  ширины, сделать желтую полоску видной при получении урона"""
 		transition_width = 0
 		transition_color = THECOLORS['red']
 
-		if a:
-			if self.current_health < self.target_health: 
-				self.current_health += self.health_cheange_speed
-				transition_width = int((self.target_health - self.current_health)/self.health_ratio)
-				transition_color = THECOLORS['green']
-			if self.current_health > self.target_health: 
-				self.current_health -= self.health_cheange_speed
-				transition_width = int((self.target_health - self.current_health)/self.health_ratio)
-				transition_color = THECOLORS['yellow']
+		if self.current_health < self.target_health: 
+			self.current_health += self.health_cheange_speed
+			transition_width = int((self.target_health - self.current_health)/self.health_ratio) # Скорость хила
+			transition_color = THECOLORS['green']
+		if self.current_health > self.target_health: 
+			self.current_health -= self.health_cheange_speed
+			transition_width = int((self.target_health - self.current_health)/self.health_ratio) # Скорость урона
+			transition_color = THECOLORS['yellow']
 
 		health_bar_rect = pygame.Rect(10,25,self.current_health / self.health_ratio, 15)
 		transition_bar_rect = pygame.Rect(health_bar_rect.right, 25, transition_width, 15)
 
-		pygame.draw.rect(self.screen, THECOLORS['green'], health_bar_rect)
-		pygame.draw.rect(self.screen, THECOLORS['red'], transition_bar_rect)
-		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 25, self.health_bar_lenght, 15), 4)
-
+		pygame.draw.rect(self.screen, THECOLORS['red'], health_bar_rect)
+		pygame.draw.rect(self.screen, transition_color, transition_bar_rect)
+		# Рамка
+		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 25, self.health_bar_lenght, 15), 1)
 
 	def control(self):
-		self.advanced_health(self.a)
+		self.advanced_health()
 		keys = pygame.key.get_pressed()
 		mouse_buttons = pygame.mouse.get_pressed(5) #tuple ()
 	
@@ -96,15 +96,9 @@ class Hero():
 			self.gun.control([self.rect.centerx, self.rect.centery])
 
 		if keys[pygame.K_r]: 
-			self.get_damage(200)
-			self.a = True
-		else: self.a = False
+			self.get_damage(20)
 		if keys[pygame.K_e]: 
-			self.get_health(200)
-			self.a = True
-		else: self.a = False
-
-
+			self.get_health(20)
 
 		#if keys[pygame.K_f]: self.tp.use()
 
