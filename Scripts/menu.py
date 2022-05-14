@@ -1,11 +1,11 @@
 import pygame, sys
 from pygame.color import THECOLORS
+from heroes import Soul
 from button import Button
 from display import Display
 from heroes import Hero
 from lvl_1 import Lvl_1
 
-"""Сделать контроллер который будет отвечать за переходы между комнатами"""
 
 """Сделать cooldown для кнопок"""
 class Menu():
@@ -15,7 +15,7 @@ class Menu():
 
         self.screen = Display(False)
         self.color = 'white'
-        self.hero = Hero(color = 'black')
+        self.hero = Soul()
 
         self.lvl = Lvl_1(self.screen)
         self.settings = Settings(self.screen)
@@ -34,7 +34,6 @@ class Menu():
                 mouse_buttons = pygame.mouse.get_pressed(5)
 
                 if event.type == pygame.QUIT: return sys.exit()
-
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE and buttons != []: return
 
             if buttons == None:
@@ -58,7 +57,6 @@ class Menu():
             self.hero.control()
 
             self.screen.update(self.color)
-
 
     def settings(self):
         buttons = [

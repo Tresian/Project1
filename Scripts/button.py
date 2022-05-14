@@ -5,8 +5,6 @@ from display import Display
 """Сделать загружку кантинок, исправить местоположение"""
 class Button():
     """Button"""
-
-    """Переделать кнопки"""
     def __init__(self, text, x, y):
         self.screen = pygame.display.get_surface()
         self.text = text.lower()

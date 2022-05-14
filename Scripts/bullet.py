@@ -11,7 +11,7 @@ class Bullet():
         self.mouse_position = mouse_position
         self.position = (gun_position[0], gun_position[1])
         self.size = (5, 5)
-        self.speed = 4.0
+        self.speed = 1.0
         self.image = pygame.Surface(self.size)
         self.image.fill(THECOLORS['purple'])
         self.rect = pygame.Rect(self.position, self.size)
@@ -24,6 +24,8 @@ class Bullet():
     def draw(self): self.screen.blit(self.image, (self.rect.x, self.rect.y))
 
     def move(self):
+        """Сделать так чтобы пули летели только прямо"""
+
         if self.mouse_position[0] > self.rect.centerx and self.mouse_position[1] > self.rect.centery:
             self.rect.centerx += self.speed
             self.rect.centery += self.speed
@@ -34,5 +36,6 @@ class Bullet():
             self.rect.centerx += self.speed
             self.rect.centery -= self.speed
         if self.mouse_position[0] < self.rect.centerx and self.mouse_position[1] > self.rect.centery:
-            self.rect.centerx -= self.speed
             self.rect.centery += self.speed
+            self.rect.centerx -= self.speed
+            

@@ -1,3 +1,5 @@
+from calendar import c
+from tkinter import CENTER
 import pygame, time
 from pygame.color import THECOLORS
 from display import Display
@@ -6,10 +8,10 @@ from button import Button
 
 pygame.init()
 
+
 screen = Display(False)
+s = pygame.display.get_surface()
 
-
-a = Button('play', 50, 100)
 
 def main():
     while True:
@@ -22,8 +24,7 @@ def main():
             if event.type == pygame.KEYDOWN and keys[pygame.K_v]: pass
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE: exit()
         
-        a.draw()
-        a.click()
+
         screen.update('white')
         
 

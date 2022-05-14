@@ -1,6 +1,7 @@
 import pygame
 from display import Display
 from heroes import Hero
+from enemy import Enemy
 
 
 
@@ -8,6 +9,7 @@ class Lvl_1():
     def __init__(self, screen):
         self.screen = screen
         self.hero = Hero()
+        self.enemy = Enemy(500, 500)
 
 
     def cycle(self): 
@@ -24,5 +26,11 @@ class Lvl_1():
 
 
             self.hero.control()
+            self.enemy.control()
 
             self.screen.update()
+
+
+if __name__ == '__main__':
+    level = Lvl_1(Display(False))
+    level.cycle()

@@ -37,7 +37,7 @@ class Gun():
         if key == True: self.bullets.append(Bullet(self.rect, self.mouse_position))
 
     def check_bullets(self):
-        #изменить удаление пуль
+        #изменить удаление пуль, когда пулю уйдет за пределы экрана уничтожать ее
         if self.bullets != []:
             for bullet in self.bullets:
                 bullet.position = bullet.control()
