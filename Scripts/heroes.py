@@ -47,6 +47,7 @@ class Soul():
 class Hero(Soul):
 	"""Модель героя"""
 	def __init__(self, skin: bool = False, color: str = "white") -> None:
+		super().__init__()
 		# Get screen and screen size
 		self.screen = pygame.display.get_surface()
 		self.screen_size = [self.screen.get_width(), self.screen.get_height()]
@@ -76,8 +77,8 @@ class Hero(Soul):
 		
 		# Health
 		self.current_health = 1000
-		self.target_health = 1000
 		self.max_health = 1000
+		self.target_health = self.max_health
 		self.health_bar_lenght = 300
 		self.health_ratio = self.max_health / self.health_bar_lenght
 		self.health_cheange_speed = 5
@@ -85,8 +86,8 @@ class Hero(Soul):
 
 		# Energy
 		self.current_energy = 1000
-		self.target_energy = 1000
 		self.max_energy = 1000
+		self.target_energy = self.max_energy
 		self.energy_bar_lenght = 300
 		self.energy_ratio = self.max_energy / self.energy_bar_lenght
 		self.energy_cheange_speed = 5
@@ -96,13 +97,16 @@ class Hero(Soul):
 		if self.target_health > 0 and self.target_health - amount >= 0: self.target_health -= amount
 		else: self.target_health = 0
 		if self.target_health <= 0: self.target_health = 0
+
 	def get_health(self, amount):
 		if self.target_health < self.max_health and self.target_health + amount <= self.max_health: self.target_health += amount
 		else: self.target_health = self.max_health
 		if self.target_health >= self.max_health: self.target_health = self.max_health
+
 	def regen(self):
 		if self.target_health < self.max_health and self.target_health + self.regeniration <= self.max_health: self.target_health += self.regeniration
 		else: self.target_health = self.max_health
+
 	def advanced_health(self):
 		"""сделать чтобы желтая полоса от урона не выходила за границу здоровья"""
 		transition_width = 0
@@ -110,25 +114,30 @@ class Hero(Soul):
 
 		if self.current_health < self.target_health: 
 			self.current_health += self.health_cheange_speed
-			transition_width = int((self.target_health - self.current_health)/self.health_ratio) # Скорость хила
+			transition_width = int((self.target_health - self.current_health) / self.health_ratio) # Скорость хила
 			transition_color = THECOLORS['green']
-		if self.current_health > self.target_health: 
+		elif self.current_health > self.target_health: 
 			self.current_health -= self.health_cheange_speed
-			transition_width = int((self.target_health - self.current_health)/(-self.health_ratio)) # Скорость урона
+			transition_width = int((self.target_health - self.current_health) / -self.health_ratio) # Скорость урона, ошибка в этом месте
+
+			print(transition_width)
 			transition_color = THECOLORS['yellow']
 
-		health_bar_rect = pygame.Rect(10,25,int(self.current_health / self.health_ratio), 15)
-		transition_bar_rect = pygame.Rect(health_bar_rect.right, 25, transition_width, 15)
+		health_bar_rect = pygame.Rect(10, 25, self.current_health // self.health_ratio, 15) # health
+		t = pygame.Rect(10, 25, self.health_bar_lenght, 15)
+		transition_bar_rect = pygame.Rect(health_bar_rect.right, 25, transition_width, 15) # demage
 
 		pygame.draw.rect(self.screen, THECOLORS['red'], health_bar_rect) # здоровье
 		pygame.draw.rect(self.screen, transition_color, transition_bar_rect) # отступы
-		# Рамка
-		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 25, self.health_bar_lenght, 15), 1)
+		
+		pygame.draw.rect(self.screen, THECOLORS['white'], t, 1) # Рамка
+		#                                                 (x,   y,   			len,  height)
 
 	def get_fatigue(self, amount):
 		if self.target_energy> 0 and self.target_energy - amount >= 0: self.target_energy -= amount
 		else: self.target_energy = 0
 		if self.target_energy <= 0: self.target_energy = 0
+
 	def get_energy(self, amount):
 		if self.target_energy < self.max_energy and self.target_energy + amount <= self.max_energy: self.target_energy += amount
 		else: self.target_energy = self.max_energy
@@ -143,7 +152,7 @@ class Hero(Soul):
 			self.current_energy += self.energy_cheange_speed
 			transition_width = int((self.target_energy - self.current_energy)/self.energy_ratio) # Скорость хила
 			transition_color = THECOLORS['white']
-		if self.current_energy > self.target_energy: 
+		elif self.current_energy > self.target_energy: 
 			self.current_energy -= self.energy_cheange_speed
 			transition_width = int((self.target_energy - self.current_energy)/(-self.energy_ratio)) # Скорость урона
 			transition_color = THECOLORS['purple']
@@ -153,12 +162,12 @@ class Hero(Soul):
 
 		pygame.draw.rect(self.screen, THECOLORS['blue'], energy_bar_rect) # здоровье
 		pygame.draw.rect(self.screen, transition_color, transition_bar_rect) # отступы
-		# Рамка
-		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 45, self.energy_bar_lenght, 15), 1)
+		
+		pygame.draw.rect(self.screen, THECOLORS['white'], (10, 45, self.energy_bar_lenght, 15), 1) # Рамка
 
-	def control(self):
+	def control(self) -> None:
 		self.advanced_health()
-		self.regen()
+		#self.regen()
 		self.advanced_energy()
 		keys = pygame.key.get_pressed()
 		mouse_buttons = pygame.mouse.get_pressed(5) #tuple ()

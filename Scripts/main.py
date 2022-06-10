@@ -7,9 +7,8 @@ class Game():
 
 		self.menu = Menu()
 
-	def run(self): self.menu.run()
+	def run(self) -> None: self.menu.run()
 
 
 if __name__ == '__main__':
-	game = Game()
-	game.run()
+	Game().run()

@@ -26,7 +26,7 @@ class Lvl_1():
 
 
             self.hero.control()
-            self.enemy.control()
+            #self.enemy.control()
 
             self.screen.update()
 

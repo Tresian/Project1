@@ -1,9 +1,8 @@
 import pygame, sys
 from pygame.color import THECOLORS
-from heroes import Soul
+from heroes import Soul, Hero
 from button import Button
 from display import Display
-from heroes import Hero
 from lvl_1 import Lvl_1
 
 
